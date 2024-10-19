@@ -1,0 +1,102 @@
+Paralel Testing ve farklı browser desteği için neler yaptık ?
+1- XML kullandık.
+2- Browser adını göndermek için parametre ekledik.
+3- Static i kaldırdık WebDriver dan, çünkü her testin kendi
+   süreci içinde kendi driver oluması gerekiyordu.
+   Böylece aynı anda çalışabildi.
+
+Cucumber a gelince.
+WebDriver ı burada extend le almadığım ve static olarak kullandığım
+için STATİC den vazgeçemiyorum. Bu durumda ne yapmam lazım?
+
+O zaman Her testin kendi static DRİVER ı olabilmeli
+yani LOCAL STATİC Driver olabilmeli.
+
+Peki Bilgisayarda Süreç nedir ? ve
+Her sürece özel Static nasıl yapılır?
+
+Bunun için bilgisayarın gelişim sürecine bakalım :
+Bilgisayar aynı anda tek işi yapabilir (Dİ)
+
+ilk çıkan işlemciler
+80 işlemcisi
+
+80 86 işelmcisi
+80 286 işlemcisi
+386 işlemcisi
+486 işlemcisi
+5 (86) Pentium diyorlar
+PII    her işlemci değiştikçe hız ve içind ekomut miktarı artar
+PIII
+PIV     4GHz  bu noktaya kadar çıkıyor
+
+yüksek hız , ısınma demek
+Bilgisayarın en büyük düşmanı : ısı ve toz
+
+Madem daha yüksek hızlara çıkamıyoruz.
+
+İşlemcinin içinde esas iş yapan ALU bir bölüm var, çekirdek, core
+İşlemciye 2 tane hatta 4 hatta 8 tane 16 koyalım
+İşte böylece AYNI anda 2 iş, 4 iş, 8 iş, 16 iş
+yapabilir hale geldi.
+  Windows sanal olara yazılımla destekleyerek aynı anda
+dah afazla iş yapabilir hissettirebilir.
+
+İ3 4 Core
+
+Harddisk -> RAM -> İşlemcini içerisinde Cache Bellek -> İşlemci
+
+2 TB        16GB        16MB
+
+Hızlı iletişim , elektiriği en hızlı ileten metallere ihtiyaç var
+Altın - Gümüş
+
+İphon un fiyatını RAM miktarını belirler
+Günümüzde Eski bilgisayarları toplayı onlardan değerli metalleri
+ayrıştırıp geri dönüşüm yerleri var.
+
+ALU -> Aritmetic Logic Unit : çekirdek , core
+Her bir memurun(CORE-Çekirdek-ALU) iş hattı ayrıdır.
+Bu ayrı iş hatlarına , ayrı süreçler, yani ayrı boru hatları ggibidir
+Bunlara THREAD denir.
+
+Thread.Sleep -> bu hattı verilen süre kadar uyut
+Her Thread in kendi Static değişkenini tanımlayacağız
+Böyle Thread e özel tanımladığımzı için, birbirine karışmayacak.
+Her Thread e özel static olacak.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

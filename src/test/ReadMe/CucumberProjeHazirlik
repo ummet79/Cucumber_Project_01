@@ -1,0 +1,28 @@
+1- Yeni projeye tıklattım -> Proje tipi olarak MAVEN seçildi
+   Java versiyonu olarak Java en az 11 seçildi.
+
+2- Maven olarak açılan projede aşağıdaki klasör yapısı gözüktü:
+      main: Developer ın source kodları
+      test: Tester ın kodları
+
+3- Mevan ın verdiği klasör yapısında Test tarafında Cucumber
+   düzenine uygun klasörler açıldı.
+
+            FeatureFiles    -> Senaryolar burada
+            StepDefinitions -> Senaryoların çalışan step kodları
+            Pages           -> Page Object Modele uygun class, ve onlara gerekli classlar
+            Utilities       -> Driver ve diğer Tool larımız
+            Runners         -> Çalıştırıcılar (buranın xml i gibi)
+
+4- Ayarlar:
+      a) Intelije 2 tane plugin eklenecek
+         1- Cucumber for Java
+         2- Gherkin Language -> https://cucumber.io/docs/gherkin/reference/#keywords
+
+      b) POM.xml -> Project Object Model Ayarları
+            ilgili Lib ler eklenecek
+
+            Selenium
+            Cucumber
+            TestNG
+            Cucumber-TestNG  (birleştiren lib)
