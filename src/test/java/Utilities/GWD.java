@@ -6,39 +6,56 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 import java.util.Locale;
 
-public class GWD_Old {  // Genel Web Driver
+public class GWD {
 
-    private static WebDriver driver;
+    private static ThreadLocal<WebDriver> threadDriver= new ThreadLocal<>();
+    public static ThreadLocal<String> threadBrowserName= new ThreadLocal<>();
+
+    // driver: threadDriver.get() ->  bulunduğun thread deki driverı veriyor.
+    // driver vermek için : threadDriver.set(driver) -> bulunduğum threade driver ver
 
     public static WebDriver getDriver()
     {
         Locale.setDefault(new Locale("EN"));
         System.setProperty("user.language", "EN");
 
-        if (driver == null) //hiç oluşturulmamış ise
+        if (threadBrowserName.get()==null) // XML den çalışmayan durumlar için
+            threadBrowserName.set("chrome");  // default chrome
+
+
+        if (threadDriver.get() == null)   // bu hattaki driver NULL ise
         {
-            driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+            switch (threadBrowserName.get()) { //hattaki hangi brwser adı var
+                case "firefox" :  threadDriver.set(new FirefoxDriver()); break; // bu threade bir tane driver set et
+                case "edge" :  threadDriver.set(new EdgeDriver()); break;
+                default:  threadDriver.set(new ChromeDriver()); break;
+            }
+
+            threadDriver.get().manage().window().maximize();
+            threadDriver.get().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         }
 
-        // eğer zaten oluşmuşsa önceden oluşmuş driver ı gönder
-        return driver;
+        return threadDriver.get();
     }
+
+
 
     public static void quitDriver(){
 
-        //test sonucu ekranı bir miktar beklesin diye
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        if (driver != null)
+        if (threadDriver.get() != null)
         {
-            driver.quit();
-            driver=null;
+            threadDriver.get().quit();
+
+            //driver=null; // hattakini al, NULL değeri ata ve kendi SET, hattakini NULL yap
+            WebDriver hattaki= threadDriver.get();
+            hattaki=null;
+            threadDriver.set(hattaki);
         }
 
     }
