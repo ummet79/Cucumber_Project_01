@@ -89,6 +89,40 @@ public class DialogContent extends ParentPage {
     @FindBy(css = "[value='Log In']")
     public WebElement login;
 
+    @FindBy(xpath = "//div[@id='rightPanel']")
+    public WebElement messageBox;
+
+    @FindBy(xpath = "//*[text()='Update Contact Info']")
+    public WebElement updateContact;
+
+    @FindBy(xpath = "//input[@value = 'Update Profile']")
+    public WebElement updateButton;
+
+    @FindBy(xpath = "//*[@id='updateProfileResult']/h1")
+    public WebElement updatedMessage;
+
+    @FindBy(xpath = "//*[@id='leftPanel']/p")
+    public WebElement nameAssertion;
+
+    @FindBy(xpath = "//*[@value='Update Profile']")
+    public WebElement updateProfile;
+
+    @FindBy(xpath = "//*[text()='City is required.']")
+    public WebElement cityRequired;
+
+    @FindBy(xpath = "//*[text()='State is required.']")
+    public WebElement stateRequired;
+
+    @FindBy(xpath = "//*[text()='Zip Code is required.']")
+    public WebElement zipCodeRequired;
+
+
+    public void verifyMessageContainsText( String value) {
+        wait.until(ExpectedConditions.visibilityOf(this.messageBox));
+        Assert.assertTrue(this.messageBox.getText().toLowerCase().contains(value.toLowerCase()));
+    }
+
+
     public void selectFirstAccount() {
         // İlk seçenek
         Select accountDropdown = new Select(accountselect);
@@ -129,6 +163,19 @@ public class DialogContent extends ParentPage {
                 return this.login;
             case "opennewaccountbutton":
                 return this.opennewaccountbutton;
+
+            case "updateContact":
+                return this.updateContact;
+
+            case "updateButton":
+                return this.updateButton;
+
+            case "updatedMessage":
+                return this.updatedMessage;
+
+            case "nameAssertion":
+                return this.nameAssertion;
+
 
             default:
                 System.out.println("Element bulunamadı: " + strElementName);

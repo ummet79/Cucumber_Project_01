@@ -17,6 +17,8 @@ public class LeftNav extends ParentPage{
     @FindBy(xpath = "//*[text()='Log Out']")
     public WebElement logout;
 
+
+
     //open NewAccount Butonu
     @FindBy(xpath = "//*[text()='Open New Account']") //
     public WebElement opennewaccount;
