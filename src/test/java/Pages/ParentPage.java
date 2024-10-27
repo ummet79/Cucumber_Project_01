@@ -37,4 +37,9 @@ public class ParentPage {
         Assert.assertTrue(element.getText().toLowerCase().contains(value.toLowerCase()) );
     }}
 
+
+
+
+
+
     
