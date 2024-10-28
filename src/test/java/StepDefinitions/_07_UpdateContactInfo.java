@@ -8,95 +8,55 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class _07_UpdateContactInfo {
     DialogContent dc=new DialogContent();
     LeftNav ln=new LeftNav();
 
-    public static String username; // Kullanıcı adı
-    public static String password;
-
-
-    @Given("Navigate to the ParaBank website")
-    public void navigateToTheParaBankWebsite() {
-        GWD.getDriver().get("https://parabank.parasoft.com");
-    }
-
-
-    @And("Click on the Element in the LeftNav")
-    public void clickOnTheElementInTheLeftNav(DataTable dtButon) {
-        List<String> butonlar=dtButon.asList();
-        for (int i = 0; i < butonlar.size(); i++) {
-            dc.myClick(dc.getWebElement(butonlar.get(i)));
-
-        }
-    }
-
-    @And("Updating user information")
-    public void updatingUserInformation(DataTable dtKutuVeYazilar) {
-        List<List<String>> kutuVeYazilar = dtKutuVeYazilar.asLists();
-
-        for (int i = 0; i < kutuVeYazilar.size(); i++) {
-            WebElement kutu = dc.getWebElement(kutuVeYazilar.get(i).get(0));
-            dc.mySendKeys(kutu, kutuVeYazilar.get(i).get(1));
-        }
-    }
-
-    @And("Click on the Element in DialogContent")
-    public void clickOnTheElementInDialogContent(DataTable dtButonlar) {
-        List<String> butonlar=dtButonlar.asList();
-        for (int i = 0; i < butonlar.size(); i++) {
-            dc.myClick(dc.getWebElement(butonlar.get(i)));
-
-        }
-    }
-    @And("Click On The Element in LeftNav")
-    public void clickOnTheElementInLeftNav(DataTable dtButonlar) {
-        List<String> butonlar=dtButonlar.asList();
-        for (int i = 0; i < butonlar.size(); i++) {
-            dc.myClick(dc.getWebElement(butonlar.get(i)));
-        }
-    }
-
-    @Then("User confirms update succsess")
-    public void userConfirmsUpdateSuccsess() {
-
-        dc.verifyMessageContainsText("successfully");
-    }
+@Given("Navigate to the ParaBank website")
+public void navigateToTheParaBankWebsite() {
+    GWD.getDriver().get("https://parabank.parasoft.com");
+}
 
     @And("Click on the element in the LeftNav")
     public void clickOnTheElementInTheLeftNav() {
-        dc.myClick(dc.updateProfile);
+        dc.myClick(dc.getWebElement("updateContact"));
     }
 
-    @And("updating user informationn")
-    public void updatingUserInformationn(DataTable dtKutularveYazilar) {
-        List<List<String>> kutuVeYazilar = dtKutularveYazilar.asLists();
+    @And("updating user information")
+    public void updatingUserInformation(DataTable dtFields) {
+        List<List<String>> fields = dtFields.asLists();
+        for (List<String> row : fields) {
+            WebElement field = dc.getWebElement(row.get(0));
+            dc.mySendKeys(field, row.get(1));
 
-        for (int i = 0; i < kutuVeYazilar.size(); i++) {
-            WebElement kutu = dc.getWebElement(kutuVeYazilar.get(i).get(0));
-            dc.mySendKeys(kutu, kutuVeYazilar.get(i).get(1));
+            // Elementin görünür olduğunu kontrol et ve bekle
+            WebDriverWait wait = new WebDriverWait(GWD.getDriver(), Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(field));
+            dc.mySendKeys(field, row.get(1));
         }
     }
 
     @And("Click on the element in DialogContent")
-    public void clickOnTheElementInDialogContent() {
-        dc.myClick(dc.updateProfile);
-    }
+    public void clickOnTheElementInDialogContent(DataTable buttonTex) {
+        List<String> datalar = buttonTex.asList();
+
+        for (int i = 0; i < datalar.size(); i++) {
+            dc.myClick(dc.getWebElement(datalar.get(i)));
+        }
+
+//    @Then("User sees the warning message <warningMessage>")
+//    public void userSeesTheWarningMessage(String expectedMessage) {
+//        // Hata mesajını almak için uygun metot
+//        String actualMessage = dc.getErrorMessage(); // Hata mesajını al
+//        assertTrue("Warning message not displayed", actualMessage.contains(expectedMessage));
+//    }
 
 
-
-   @Then("User see rhe warning message")
-    public void userSeeRheWarningMessage() {
-
-       dc.verifyMessageContainsText("required");
-
-    }
-
-
-
-
-    }
+}}
 

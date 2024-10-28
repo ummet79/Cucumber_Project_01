@@ -16,7 +16,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 
-public class _01_UserRegistration_US04 {
+public class _01_UserRegistration {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
 
@@ -44,12 +44,12 @@ public class _01_UserRegistration_US04 {
         }
 
 // Random veriler üretme
-        _02_UserLogin_US04.username = RandomStringUtils.randomAlphanumeric(8); // 8 karakterli kullanıcı adı
-        _02_UserLogin_US04.password = RandomStringUtils.randomNumeric(4); // 4 karakterli şifre
+        _02_UserLogin.username = RandomStringUtils.randomAlphanumeric(8); // 8 karakterli kullanıcı adı
+        _02_UserLogin.password = RandomStringUtils.randomNumeric(4); // 4 karakterli şifre
 // Random verileri form alanlarına yazma
-        dc.mySendKeys(dc.username1, _02_UserLogin_US04.username);
-        dc.mySendKeys(dc.password1, _02_UserLogin_US04.password);
-        dc.mySendKeys(dc.repeatedPassword, _02_UserLogin_US04.password);
+        dc.mySendKeys(dc.username1, _02_UserLogin.username);
+        dc.mySendKeys(dc.password1, _02_UserLogin.password);
+        dc.mySendKeys(dc.repeatedPassword, _02_UserLogin.password);
 
     }
 
@@ -62,6 +62,12 @@ public class _01_UserRegistration_US04 {
         }
     }
 
+    @And("the user confirms the message that he has successfully registered")
+    public void theUserConfirmsTheMessageThatHeHasSuccessfullyRegistered() {
+        dc.LoginContainsText(dc.registertext, "successfully");
+        System.out.println("Kayıt olma onayı mesajı: " + dc.registertext.getText()); // Onay mesajını yazdırma
+    }
+
     @Then("the user changes the session by clicking the button")
     public void theUserChangesTheSessionByClickingTheButton(DataTable dtlogout) {
         List<String> button = dtlogout.asList();
@@ -70,4 +76,6 @@ public class _01_UserRegistration_US04 {
             ln.myClick(ln.getWebElement2(button.get(i)));
         }
     }
+
+
 }
