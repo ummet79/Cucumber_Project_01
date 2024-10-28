@@ -12,7 +12,7 @@ import org.testng.Assert;
 
 import java.util.List;
 
-public class _03_AccountCreationStep_US04 {
+public class _04_AccountCreationStep {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
 

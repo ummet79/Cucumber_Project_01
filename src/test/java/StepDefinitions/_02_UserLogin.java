@@ -8,7 +8,7 @@ import io.cucumber.java.en.When;
 
 import java.util.List;
 
-public class _02_UserLogin_US04 {
+public class _02_UserLogin {
     LeftNav ln = new LeftNav();
     DialogContent dc = new DialogContent();
     // Statik değişkenler
@@ -18,8 +18,8 @@ public class _02_UserLogin_US04 {
     @When("the user enters a valid username and password")
     public void theUserEntersAValidUsernameAndPassword() { // Kullanıcı geçerli kullanıcı adı ve şifreyi girer
 
-        dc.mySendKeys(dc.username, _02_UserLogin_US04.username); // Kullanıcı adı alanına yazma
-        dc.mySendKeys(dc.password, _02_UserLogin_US04.password); // Şifre alanına yazma
+        dc.mySendKeys(dc.username, _02_UserLogin.username); // Kullanıcı adı alanına yazma
+        dc.mySendKeys(dc.password, _02_UserLogin.password); // Şifre alanına yazma
     }
 
     @And("the user clicks the button")
@@ -30,5 +30,11 @@ public class _02_UserLogin_US04 {
             dc.myClick(dc.getWebElement(datalar.get(i)));
         }
 
+    }
+
+    @And("the user confirms the message that he has successfully logined")
+    public void theUserConfirmsTheMessageThatHeHasSuccessfullyLogined() {
+        dc.LoginContainsText(dc.loginText, "Welcome");
+        System.out.println("Kayıt olma onayı mesajı: " + dc.loginText.getText()); // Onay mesajını yazdırma
     }
 }

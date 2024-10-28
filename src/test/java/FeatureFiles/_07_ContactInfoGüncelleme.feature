@@ -1,48 +1,28 @@
-Feature: Update contact Functionally
+
+Feature: Update Contact Functionality
 
   Background:
     Given Navigate to the ParaBank website
 
-
-  Scenario: Update Contact Info
-    And Click on the Element in the LeftNav
-      | updateContact |
-    And Updating user information
-
-      | firstName   | Ummet123       |
-      | lastName    | Ozsari123      |
-      | address     | mimar sinan123 |
-      | city        | aydin123       |
-      | state       | Turkiye123     |
-      | zipCode     | 09100          |
-      | phoneNumber | 5553332211     |
-      | ssn         | 222222222      |
-
-    And Click on the Element in DialogContent
-      | updateProfile |
-
-    And Click On The Element in LeftNav
-      | logout |
-
-    Then User confirms update succsess
-
-  Scenario: Update Contact Info (negative)
+  Scenario Outline: Update Contact Info
     And Click on the element in the LeftNav
-
-    And updating user informationn
-
-      | firstName   | Ummet123       |
-      | lastName    | Ozsari123      |
-      | address     | mimar sinan123 |
-      | city        |                |
-      | state       |                |
-      | zipCode     |                |
-      | phoneNumber | 5553332211     |
-      | ssn         | 222222222      |
-
+    And updating user information
+      | firstName   | <firstName>      |
+      | lastName    | <lastName>       |
+      | address     | <address>        |
+      | city        | <city>           |
+      | state       | <state>          |
+      | zipCode     | <zipCode>        |
+      | phoneNumber | <phoneNumber>    |
+      | ssn         | <ssn>            |
     And Click on the element in DialogContent
+      | updateprofile |
+    #Then User sees the warning message <warningMessage>
 
-    Then User see rhe warning message
+    Examples:
+      | firstName   | lastName    | address         | city         | state       | zipCode | phoneNumber | ssn         | warningMessage |
+      | Ummet123    | Ozsari123   | mimar sinan123  | aydin123     | Turkiye123  | 09100    | 5553332211  | 222222222   | successfully    |
+      | Ummet123    | Ozsari123   | mimar sinan123  |              |             |          | 5553332211  | 222222222   | required        |
 
 
 

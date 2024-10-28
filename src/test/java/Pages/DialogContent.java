@@ -1,15 +1,10 @@
 package Pages;
 
 import Utilities.GWD;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v85.page.Page;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 public class DialogContent extends ParentPage {
@@ -54,6 +49,9 @@ public class DialogContent extends ParentPage {
     @FindBy(css = "[value='Register']")
     public WebElement registerButton;
 
+    @FindBy(xpath = "//*[contains(text(), 'successfully')]")
+    public WebElement registertext;
+
     //open new account
     @FindBy(css = "option[value='0']")
     public WebElement checking;
@@ -89,6 +87,9 @@ public class DialogContent extends ParentPage {
     @FindBy(css = "[value='Log In']")
     public WebElement login;
 
+    @FindBy(xpath = "//*[contains(text(), 'Welcome')]")
+    public WebElement loginText;
+
     @FindBy(xpath = "//div[@id='rightPanel']")
     public WebElement messageBox;
 
@@ -105,17 +106,10 @@ public class DialogContent extends ParentPage {
     public WebElement nameAssertion;
 
     @FindBy(xpath = "//*[@value='Update Profile']")
-    public WebElement updateProfile;
+    public WebElement updateprofile;
 
-    @FindBy(xpath = "//*[text()='City is required.']")
-    public WebElement cityRequired;
-
-    @FindBy(xpath = "//*[text()='State is required.']")
-    public WebElement stateRequired;
-
-    @FindBy(xpath = "//*[text()='Zip Code is required.']")
-    public WebElement zipCodeRequired;
-
+    @FindBy(id = "state-error")
+    public WebElement getErrorMessage;
 
     public void verifyMessageContainsText( String value) {
         wait.until(ExpectedConditions.visibilityOf(this.messageBox));
@@ -123,11 +117,6 @@ public class DialogContent extends ParentPage {
     }
 
 
-    public void selectFirstAccount() {
-        // İlk seçenek
-        Select accountDropdown = new Select(accountselect);
-        accountDropdown.selectByIndex(0); // İlk öğeyi seç
-    }
 
     public WebElement getWebElement(String strElementName) {
         switch (strElementName.trim().toLowerCase()) { // Küçük harfe çevir
@@ -149,6 +138,8 @@ public class DialogContent extends ParentPage {
                 return this.ssn;
             case "registerbutton":
                 return this.registerButton;
+            case "registertext":
+                return this.registertext;
             case "checking":
                 return this.checking;
             case "savings":
@@ -161,22 +152,25 @@ public class DialogContent extends ParentPage {
                 return this.password;
             case "login":
                 return this.login;
+            case "logintext":
+                return this.loginText;
             case "opennewaccountbutton":
                 return this.opennewaccountbutton;
 
-            case "updateContact":
+            case "updatecontact":
                 return this.updateContact;
 
-            case "updateButton":
+            case "updatebutton":
                 return this.updateButton;
 
-            case "updatedMessage":
+            case "updatedmessage":
                 return this.updatedMessage;
 
-            case "nameAssertion":
+            case "nameassertion":
                 return this.nameAssertion;
 
-
+            case "updateprofile":
+                return this.updateprofile;
             default:
                 System.out.println("Element bulunamadı: " + strElementName);
                 return null; // null döndür
