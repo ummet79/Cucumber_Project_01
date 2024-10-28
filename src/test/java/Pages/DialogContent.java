@@ -89,6 +89,33 @@ public class DialogContent extends ParentPage {
     @FindBy(css = "[value='Log In']")
     public WebElement login;
 
+    @FindBy(css = "[id='showResult'] > :nth-child(1)")
+    public WebElement transferControlMessage;
+
+    @FindBy(xpath = "(//td[@align='right'])[5]/following-sibling::td")
+    public WebElement amountControl;
+
+    @FindBy(xpath = "(//table[@id='accountTable']//a)[2]")
+    public WebElement fromAccountId;
+
+    @FindBy(xpath = "(//table[@id='transactionTable']//tr[last()])[2]")
+    public WebElement lastFundsTransferReceived;
+
+    @FindBy(xpath = "(//div[@id='rightPanel']//td)[2]")
+    public WebElement transactionIdtext;
+
+    @FindBy(css = "[id='transactionId']")
+    public WebElement transactionIdinput;
+
+    @FindBy(css = "[id='findById']")
+    public WebElement findTransactionButton;
+
+    @FindBy(css = "[id='accountId']")
+    public WebElement selectAccountInFindTransaction;
+
+    @FindBy(xpath = "//select[@id='accountId']/option[last()]")
+    public WebElement selectLastNumber;
+
     public void selectFirstAccount() {
         // İlk seçenek
         Select accountDropdown = new Select(accountselect);

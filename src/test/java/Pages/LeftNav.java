@@ -21,6 +21,9 @@ public class LeftNav extends ParentPage{
     @FindBy(xpath = "//*[text()='Open New Account']") //
     public WebElement opennewaccount;
 
+    @FindBy(xpath = "//a[text()='Find Transactions']")
+    public WebElement findTransactions;
+
     public WebElement getWebElement2(String strElementName) {
 
 
