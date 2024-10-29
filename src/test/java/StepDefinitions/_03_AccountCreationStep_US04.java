@@ -5,12 +5,17 @@ import Pages.LeftNav;
 import Utilities.GWD;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import java.util.List;
+
+import static java.awt.SystemColor.text;
+import static org.testng.AssertJUnit.assertTrue;
 
 public class _03_AccountCreationStep_US04 {
     LeftNav ln = new LeftNav();
@@ -45,49 +50,76 @@ public class _03_AccountCreationStep_US04 {
             Assert.fail("Geçersiz hesap türü: " + accountType);
         }
 
-    }
 
-    @And("The user receives a warning that the new bank account should have a minimum balance")
-    public void theUserReceivesAWarningThatTheNewBankAccountShouldHaveAMinimumBalance() {
-        dc.LoginContainsText(dc.minimumBalanceWarning, "minimum "); // Uyarı mesajını içeren WebElement'i alma
-        System.out.println("Minimum bakiye uyarı mesajı alındı."); // Uyarı mesajını yazdırma
-    }
-
-    @And("The user selects from Dropdown menu")
-    public void theUserSelectsTheAccountNumberFromTheDropDownMenu(DataTable selectAccountNumber) {
-        List<String> link = selectAccountNumber.asList();
-        for (int i = 0; i < link.size(); i++) {
-            dc.myClick(dc.getWebElement(link.get(i)));
-            System.out.println("Seçilen hesap numarası: " + link.get(i)); // Seçilen hesap numarasını yazdırma
+        @And("The user receives a warning that the new bank account should have a minimum balance")
+        public void theUserReceivesAWarningThatTheNewBankAccountShouldHaveAMinimumBalance () {
+            dc.LoginContainsText(dc.minimumBalanceWarning, "minimum "); // Uyarı mesajını içeren WebElement'i alma
+            System.out.println("Minimum bakiye uyarı mesajı alındı."); // Uyarı mesajını yazdırma
         }
-    }
 
-    @And("The user clicks on the Element in Dialog")
-    public void theUserClicksOnTheElementInDialog(DataTable button) {
-        List<String> link = button.asList();
-        for (int i = 0; i < link.size(); i++) {
-            dc.myClick(dc.getWebElement(link.get(i)));
-            System.out.println("Tıklanan element: " + link.get(i)); // Tıklanan elementi yazdırma
+        @And("The user selects from Dropdown menu")
+        public void theUserSelectsTheAccountNumberFromTheDropDownMenu (DataTable selectAccountNumber){
+            List<String> link = selectAccountNumber.asList();
+            for (int i = 0; i < link.size(); i++) {
+                dc.myClick(dc.getWebElement(link.get(i)));
+                System.out.println("Seçilen hesap numarası: " + link.get(i)); // Seçilen hesap numarasını yazdırma
+            }
         }
+
+        @And("The user clicks on the Element in Dialog")
+        public void theUserClicksOnTheElementInDialog ( String DataTable button){
+            List<String> link = button.asList();
+            for (int i = 0; i < link.size(); i++) {
+                dc.myClick(dc.getWebElement(link.get(i)));
+                System.out.println("Tıklanan element: " + link.get(i)); // Tıklanan elementi yazdırma
+            }
+        }
+
+        @Then("The user confirms the successful creation of the new bank account")
+        public void theUserConfirmsTheSuccessfulCreationOfTheNewBankAccount () {
+            dc.LoginContainsText(dc.accountOpenedText, "Congratulations");
+            System.out.println("Hesap açma onayı mesajı: " + dc.accountOpenedText.getText());// Onay mesajını yazdırma
+
+
+        }
+
+        @And("The user clicks on the generated account number.")
+        public void theUserClicksOnTheGeneratedAccountNumber () {
+            dc.myClick(dc.accountNumberClick);
+            System.out.println("Oluşturulan hesap numarasına tıklandı."); // Tıklama eylemini yazdırma
+        }
+
+        @Then("The user verifies their information in the account details {string}")
+        public void theUserVerifiesTheirInformationInTheAccountDetails (String text){
+            ln.wait.until(ExpectedConditions.textToBePresentInElement(dc.AccountDetails, text));
+            dc.LoginContainsText(dc.AccountDetails, text);
+            System.out.println("Hesap detaylarında doğrulama yapıldı: " + text); // Doğrulamayı yazdırma
+        }
+
+
     }
 
-    @Then("The user confirms the successful creation of the new bank account")
-    public void theUserConfirmsTheSuccessfulCreationOfTheNewBankAccount() {
-        dc.LoginContainsText(dc.accountOpenedText, "Congratulations");
-        System.out.println("Hesap açma onayı mesajı: " + dc.accountOpenedText.getText()); // Onay mesajını yazdırma
+    @Given("^Kullanıcı ParaBank web sitesine başarıyla giriş yapmıştır$")
+    public void kullanıcıParaBankWebSitesineBaşarıylaGirişYapmıştır() {
+        dc.mySendKeys(dc.username,"testUser");
+        dc.mySendKeys(dc.password,"testPassword");
+        dc.myClick(dc.login);
     }
 
-    @And("The user clicks on the generated account number.")
-    public void theUserClicksOnTheGeneratedAccountNumber() {
-        dc.myClick(dc.accountNumberClick);
-        System.out.println("Oluşturulan hesap numarasına tıklandı."); // Tıklama eylemini yazdırma
+
+    @When("^Kullanıcı fatura ödeme sayfasına gider$")
+    public void kullanıcıFaturaÖdemeSayfasınaGider() {
+        dc.myClick(dc.accountOpenedText);
+
     }
 
-    @Then("The user verifies their information in the account details {string}")
-    public void theUserVerifiesTheirInformationInTheAccountDetails(String text) {
-        ln.wait.until(ExpectedConditions.textToBePresentInElement(dc.AccountDetails, text));
-        dc.LoginContainsText(dc.AccountDetails, text);
-        System.out.println("Hesap detaylarında doğrulama yapıldı: " + text); // Doğrulamayı yazdırma
-    }
+    @And("^Kullanıcı \"([^\"]*)\" faturasını öder$")
+    public void kullanıcıFaturasınıÖder(String pay) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
 
+        // Hesap türünü seçme işlemi
+       dc.myClick(dc.minimumBalanceWarning);
+
+
+    }
 }
